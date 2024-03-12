@@ -16,7 +16,8 @@ import {
   Text,
   useColorScheme,
   View,
-  Alert
+  Alert,
+  Image
 } from 'react-native';
 
 import {
@@ -61,7 +62,9 @@ function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
+    flex:1,
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    justifyContent:"space-evenly",
   };
 
   return (
@@ -69,6 +72,14 @@ function App(): React.JSX.Element {
       <View style={styles.buttonBox}>
         <Button style={styles.button} title="Please please press me" onPress={()=>Alert.alert("pressed")} color="#f194ff" accessibilityLabel="Learn more about this purple button"></Button>
         <Button style={styles.button} title="Press me" onPress={()=>Alert.alert("pressed")} color="black" accessibilityLabel="Learn more about this purple button"></Button>
+      </View>
+      <View style={styles.imageBox}>
+        <Image style={styles.smallImage}
+        source={{
+          url: 'https://reactnative.dev/img/tiny_logo.png',
+        }}></Image>
+         <Image style={styles.smallImage}
+        source={require('./image.jpg')}/>
       </View>
     </SafeAreaView>
   );
@@ -82,6 +93,15 @@ const styles = StyleSheet.create({
   },
   button:{
     backgroundColor:"black",
+  },
+  imageBox:{
+    flexDirection:"row",
+    justifyContent:"space-evenly",
+    backgroundColor:"white",
+  },
+  smallImage:{
+    height:100,
+    width:100,
   },
   sectionContainer: {
     marginTop: 32,
