@@ -81,6 +81,15 @@ function App(): React.JSX.Element {
          <Image style={styles.smallImage}
         source={require('./image.jpg')}/>
       </View>
+      <View style={styles.textBox}>
+        <Text>A</Text>
+        <Text style={{alignSelf:"center"}}>little</Text>
+        <Text style={{alignSelf:"flex-end"}}>cat</Text>
+        <Text style={{color:"red"}}>
+          <Text>sitting</Text>
+          <Text>here</Text>
+        </Text>
+      </View>
     </SafeAreaView>
   );
 }
@@ -102,6 +111,11 @@ const styles = StyleSheet.create({
   smallImage:{
     height:100,
     width:100,
+  },
+  textBox:{
+    minHeight:100,
+    justifyContent:"space-around",
+    alignItems:"flex-start",
   },
   sectionContainer: {
     marginTop: 32,
