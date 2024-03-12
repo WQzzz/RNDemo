@@ -11,10 +11,12 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
+  Button,
   StyleSheet,
   Text,
   useColorScheme,
   View,
+  Alert
 } from 'react-native';
 
 import {
@@ -64,39 +66,23 @@ function App(): React.JSX.Element {
 
   return (
     <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
+      <View style={styles.buttonBox}>
+        <Button style={styles.button} title="Please please press me" onPress={()=>Alert.alert("pressed")} color="#f194ff" accessibilityLabel="Learn more about this purple button"></Button>
+        <Button style={styles.button} title="Press me" onPress={()=>Alert.alert("pressed")} color="black" accessibilityLabel="Learn more about this purple button"></Button>
+      </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  buttonBox:{
+    backgroundColor:"white",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  button:{
+    backgroundColor:"black",
+  },
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
