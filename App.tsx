@@ -62,7 +62,7 @@ function Section({children, title}: SectionProps): React.JSX.Element {
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   const [textEntered,setTextEntered]=useState("begin");
-  
+  const [textIsDisabled,setTextIsDisabled]=useState(false);
  
 
   const backgroundStyle = {
@@ -95,11 +95,13 @@ function App(): React.JSX.Element {
           <Text>{textEntered}</Text>
         </Text>
       </View>
-      <View>
+      <View style={{flexDirection:"row"}}>
         <TextInput style={{minHeight:40, width:200,borderWidth:1}} 
         onChangeText={(text)=>{setTextEntered(text);}}
+        editable={!textIsDisabled}
         multiline={true}
          />
+        <Button onPress={()=>setTextIsDisabled(!textIsDisabled)} title={textIsDisabled?"enable TextInput":"disable TextInput"}></Button>
       </View>
     </SafeAreaView>
   );
