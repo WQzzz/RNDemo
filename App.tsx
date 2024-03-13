@@ -19,7 +19,9 @@ import {
   Alert,
   Image,
   TextInput,
-  TouchableHighlight
+  TouchableHighlight,
+  TouchableOpacity,
+  TouchableWithoutFeedback
 } from 'react-native';
 
 import {
@@ -104,9 +106,23 @@ function App(): React.JSX.Element {
          />
         <Button onPress={()=>setTextIsDisabled(!textIsDisabled)} title={textIsDisabled?"enable TextInput":"disable TextInput"}></Button>
       </View>
-      <TouchableHighlight style={{alignItems:"center"}} onPress={()=>{Alert.alert("pressed")}}>
-        <Text style={styles.button}>test</Text>
-      </TouchableHighlight>
+      <View style={{flexDirection:"row",alignSelf:"stretch",justifyContent:"space-around"}}>
+        <TouchableHighlight  onPress={()=>{Alert.alert("pressed")}}>
+          <View>
+            <Text style={styles.button}>test</Text>
+          </View>
+        </TouchableHighlight>
+        <TouchableOpacity onPress={()=>{Alert.alert("pressed")}}>
+          <View style={styles.button}>
+            <Text>test</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableWithoutFeedback onPress={()=>{Alert.alert("pressed")}}>
+          <View style={styles.button}>
+            <Text>test</Text>
+          </View>
+        </TouchableWithoutFeedback>
+      </View>
     </SafeAreaView>
   );
 }
