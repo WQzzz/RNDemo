@@ -18,7 +18,8 @@ import {
   View,
   Alert,
   Image,
-  TextInput
+  TextInput,
+  TouchableHighlight
 } from 'react-native';
 
 import {
@@ -28,7 +29,6 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
@@ -69,6 +69,7 @@ function App(): React.JSX.Element {
     flex:1,
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     justifyContent:"space-evenly",
+    alignItems:"center"
   };
 
   return (
@@ -103,6 +104,9 @@ function App(): React.JSX.Element {
          />
         <Button onPress={()=>setTextIsDisabled(!textIsDisabled)} title={textIsDisabled?"enable TextInput":"disable TextInput"}></Button>
       </View>
+      <TouchableHighlight style={{alignItems:"center"}} onPress={()=>{Alert.alert("pressed")}}>
+        <Text style={styles.button}>test</Text>
+      </TouchableHighlight>
     </SafeAreaView>
   );
 }
@@ -114,7 +118,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   button:{
-    backgroundColor:"black",
+    backgroundColor:"pink",
+    alignItems:"center"
   },
   imageBox:{
     flexDirection:"row",
