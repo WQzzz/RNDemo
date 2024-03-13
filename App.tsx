@@ -21,7 +21,8 @@ import {
   TextInput,
   TouchableHighlight,
   TouchableOpacity,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  ImageBackground
 } from 'react-native';
 
 import {
@@ -123,6 +124,9 @@ function App(): React.JSX.Element {
           </View>
         </TouchableWithoutFeedback>
       </View>
+      <ImageBackground source={{url: 'https://reactnative.dev/img/tiny_logo.png'}} style={{flex:1,justifyContent:"center"}} resizeMode="cover">
+        <Text style={{color:"white",backgroundColor:"pink",lineHeight:40}}>Guess what will be shown</Text>
+      </ImageBackground>
     </SafeAreaView>
   );
 }
