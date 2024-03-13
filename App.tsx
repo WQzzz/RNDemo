@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -17,7 +17,8 @@ import {
   useColorScheme,
   View,
   Alert,
-  Image
+  Image,
+  TextInput
 } from 'react-native';
 
 import {
@@ -60,6 +61,9 @@ function Section({children, title}: SectionProps): React.JSX.Element {
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+  const [textEntered,setTextEntered]=useState("begin");
+  
+ 
 
   const backgroundStyle = {
     flex:1,
@@ -88,7 +92,14 @@ function App(): React.JSX.Element {
         <Text style={{color:"red"}}>
           <Text>sitting</Text>
           <Text>here</Text>
+          <Text>{textEntered}</Text>
         </Text>
+      </View>
+      <View>
+        <TextInput style={{minHeight:40, width:200,borderWidth:1}} 
+        onChangeText={(text)=>{setTextEntered(text);}}
+        multiline={true}
+         />
       </View>
     </SafeAreaView>
   );
