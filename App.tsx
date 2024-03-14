@@ -20,6 +20,7 @@ import {
   Modal,
   ScrollView,
   Switch,
+  ActivityIndicator,
   TouchableWithoutFeedback
 } from 'react-native';
 
@@ -27,20 +28,21 @@ import {
 
 function InputPage(){
   const [ModalVisible,setModalVisible]=useState(false)
+  const [switchEnable,setSwitchEnable]=useState(false)
   return(
-  <SafeAreaView style={styles.container} >
-      <Modal visible={ModalVisible} transparent={true} animationType="slide">
+  <SafeAreaView style={styles.container} onPress={()=>{Keyboard.dismiss}}>
+    <Modal visible={ModalVisible} transparent={true} animationType="slide">
         <View style={{justifyContent:"center",flex:1,alignItems:"center"}}>
         <View style={styles.modal}>
-          <Text>This is a Modal</Text>
+          <ActivityIndicator color="pink" size="large"></ActivityIndicator>
           <Button onPress={()=>{setModalVisible(false)}} title="Hide it"></Button>
-          <Text>Bad text</Text>
+          <Text>This is a Modal</Text>
         </View>
         </View>
-      </Modal>
-      <Button title="show Modal" onPress={()=>{setModalVisible(true)}}></Button>
-      <ScrollView style={{flex:1}}>
-      <Text style={{fontSize:42,margin:20,backgroundColor:"yellow"}}>
+    </Modal>
+    <Button color="black" title="show Modal" onPress={()=>{setModalVisible(true)}}></Button>
+    <ScrollView style={{flex:1}}>
+      <Text style={{fontSize:42,marginLeft: 20,marginRight: 20}} backgroundColor={switchEnable?"pink":"yellow"} onPress={()=>{Keyboard.dismiss}}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -50,8 +52,7 @@ function InputPage(){
           culpa qui officia deserunt mollit anim id est laborum.
       </Text>
     </ScrollView>
-    <Switch value={true}>
-
+    <Switch value={switchEnable} trackColor={{true:"pink"}} thumbColor={switchEnable?"white":"white"}   ios_backgroundColor="yellow" onValueChange={()=>setSwitchEnable(!switchEnable)}>
     </Switch>
     <KeyboardAvoidingView style={{flex:1,justifyContent:"center"}} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <Text>Please enter somethings</Text>
