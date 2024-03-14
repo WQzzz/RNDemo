@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import Page from './Basics';
 import { 
   KeyboardAvoidingView,
@@ -17,15 +17,25 @@ import {
   StyleSheet,
   SafeAreaView,
   View,
+  Modal,
   TouchableWithoutFeedback
 } from 'react-native';
 
+
 function InputPage(){
+  const [ModalVisible,setModalVisible]=useState(false)
   return(
   <SafeAreaView style={styles.container} >
-    <View >
-      <Text>whera</Text>
-    </View>
+      <Modal visible={ModalVisible} transparent={false} animationType="slide">
+        <View style={{justifyContent:"center",flex:1,alignItems:"center"}}>
+        <View style={styles.modal}>
+          <Text>This is a Modal</Text>
+          <Button onPress={()=>{setModalVisible(false)}} title="Hide it"></Button>
+          <Text>Bad text</Text>
+        </View>
+        </View>
+      </Modal>
+      <Button title="show Modal" onPress={()=>{setModalVisible(true)}}></Button>
     <KeyboardAvoidingView style={{flex:1,justifyContent:"center"}} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <Text>Please enter somethings</Text>
       <TextInput keyboradType="default" style={{borderWidth:1}}></TextInput>
@@ -40,9 +50,17 @@ function App(): React.JSX.Element {
 }
 
 const styles = StyleSheet.create({
+  modal:{
+    justifyContent:"center",
+    alignItems:"center",
+    height:180,
+    width:180,
+    borderWidth:1,
+  },
   container: {
     flex: 1,
-    justifyContent:"center"
+    justifyContent:"center",
+    alignItems:"center"
   },
   inner: {
     padding: 24,
