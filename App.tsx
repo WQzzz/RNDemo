@@ -7,6 +7,7 @@
 
 import React, { useState } from 'react';
 import Page from './Basics';
+import FishFlatList  from './FishFlatList';
 import { 
   KeyboardAvoidingView,
   TextInput,
@@ -65,7 +66,7 @@ function InputPage(){
 
 
 function App(): React.JSX.Element {
-  return <InputPage/>;
+  return <FishFlatList/>;
 }
 
 const styles = StyleSheet.create({
