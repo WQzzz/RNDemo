@@ -9,6 +9,7 @@ import React, { useState } from 'react';
 import Page from './Basics';
 import FishFlatList  from './FishFlatList';
 import PimsSectionList  from './PimsSectionList';
+import MessageFlatList from './MessageFlatList';
 
 import { 
   KeyboardAvoidingView,
@@ -68,7 +69,7 @@ function InputPage(){
 
 
 function App(): React.JSX.Element {
-  return <PimsSectionList/>;
+  return <MessageFlatList/>;
 }
 
 const styles = StyleSheet.create({
