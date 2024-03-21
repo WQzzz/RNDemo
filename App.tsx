@@ -8,9 +8,10 @@
 import React, { useState } from 'react';
 import Page from './Basics';
 import FishFlatList  from './FishFlatList';
-import PimsSectionList  from './PimsSectionList';
 import MessageFlatList from './MessageFlatList';
 import VideoFlatList from './VideoFlatList';
+import PimsSectionList  from './PimsSectionList';
+import SearchTagSectionList from './SearchTagSectionList'
 
 import { 
   KeyboardAvoidingView,
@@ -70,7 +71,7 @@ function InputPage(){
 
 
 function App(): React.JSX.Element {
-  return <VideoFlatList/>;
+  return <SearchTagSectionList/>;
 }
 
 const styles = StyleSheet.create({
