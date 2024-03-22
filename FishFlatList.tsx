@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import{
     StyleSheet,
     View,
@@ -7,7 +7,8 @@ import{
     Text,
     FlatList,
     Button,
-    Pressable
+    Pressable,
+    Alert
 } from 'react-native'
 
 
@@ -61,6 +62,33 @@ const FishData=
         status:1,
     }]
 
+const Header=()=>{
+    const [TextClicked,setTextClicked]=useState(1)
+    return (
+        <View  style={styles.title}>
+            <Pressable onPress={()=>setTextClicked(1)}>
+                    <Text key={1} style={TextClicked===1?styles.statusBarItem:""}  >全部</Text>
+                    </Pressable>
+                    <Pressable onPress={()=>setTextClicked(2)} >
+                    <Text key={2} style={TextClicked===2?styles.statusBarItem:""} >待付款</Text>
+                    </Pressable>
+                    <Pressable onPress={()=>setTextClicked(3)}>
+                    <Text key={3} style={TextClicked===3?styles.statusBarItem:""} >待发货</Text>
+                    </Pressable>
+                    <Pressable onPress={()=>setTextClicked(4)}>
+                    <Text key={4} style={TextClicked===4?styles.statusBarItem:""} >待收货</Text>
+                    </Pressable>
+                    <Pressable onPress={()=>setTextClicked(5)}>
+                    <Text key={5} style={TextClicked===5?styles.statusBarItem:""} >待评价</Text>
+                    </Pressable>
+                    <Pressable onPress={()=>setTextClicked(6)}>
+                    <Text key={6} style={TextClicked===6?styles.statusBarItem:""} >退款中</Text>
+                </Pressable>
+        </View>
+    )
+}
+  
+
 
 const Item = ({order}) => (
         <View style={styles.item}>
@@ -109,14 +137,7 @@ const FishFlatList=()=>{
                     <Text >筛选</Text>
                 </View>
             </View>
-            <Pressable style={styles.title}>
-               <Text style={styles.statusBarItem}>全部</Text>
-               <Text>待付款</Text>
-               <Text>待发货</Text>
-               <Text>待收货</Text>
-               <Text>待评价</Text>
-               <Text>退款中</Text>
-            </Pressable>
+            <Header></Header>
             <View style={{flex:1}}>
                 <FlatList  data={FishData} renderItem={({item}) => <Item order={item} />}></FlatList>
             </View>
@@ -153,7 +174,8 @@ const styles=StyleSheet.create({
         textShadowOffset:{height:10,width:10},
         textDecorationColor:"gold",
         textDecorationLine:"underline",
-        textDecorationStyle:"solid"
+        textDecorationStyle:"solid",
+        fontSize:16
     },
     item:{
       borderBottomWidth:0.5,
