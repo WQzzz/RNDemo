@@ -104,10 +104,7 @@ const Item = ({order}) => (
                     <Image style={{height:60,width:60,borderRadius:8,marginRight:10}} source={order.image?({url:order.image}):require("./image.jpg")} resizeMode="contain" ></Image>
                     <Text style={styles.productName}>{order.productName}</Text>
                 </View>
-                <View style={{flexDirection:"row",alignItems:"flex-end"}}>
-                    <Text style={{fontSize:20}}>¥</Text>
-                    <Text style={styles.price}>{order.price}</Text>
-                </View>
+                <Text style={styles.price}>¥{order.price}</Text>
             </View>
             <View style={styles.listButtonGroup}>
                 <Button color="grey" title="更多" style={{margin:5}} ></Button>
@@ -127,20 +124,20 @@ const FishFlatList=()=>{
     return(
         <View style={styles.container}>
             <View style={styles.header}>
-                <Image style={{height:20,flex:0.2,alignSelf:"center"}} source={require("./leftArrow.png")} resizeMode="contain"></Image>
+                <Image style={{height:40,width:40,alignSelf:"center"}} source={require("./leftArrow.png")} resizeMode="contain"></Image>
                 <View style={styles.searchTerm} backgroundColor="#f8f8ff">
                     <Image style={{height:15,width:15,marginRight:10}}  source={require("./search.png")} resizeMode="contain"></Image>
-                    <TextInput  placeholder="搜索卖出的宝贝" ></TextInput>
+                    <TextInput style={{flex:1}}  placeholder="搜索卖出的宝贝" ></TextInput>
                 </View>
-                <View style={{height:20,flex:0.2,alignItems:"center"}} >
-                    <Image style={{height:15}}  source={require("./filter.png")} resizeMode="contain" ></Image>
+                <View style={{alignItems:"center"}} >
+                    <Image style={{height:15,width:15}}  source={require("./filter.png")} resizeMode="contain" ></Image>
                     <Text >筛选</Text>
                 </View>
             </View>
-            <Header></Header>
-            <View style={{flex:1}}>
-                <FlatList  data={FishData} renderItem={({item}) => <Item order={item} />}></FlatList>
-            </View>
+            <Header/>
+          
+                <FlatList style={{flex:1}} data={FishData} renderItem={({item}) => <Item order={item} />}></FlatList>
+          
         </View>
     )
 
@@ -153,11 +150,12 @@ const styles=StyleSheet.create({
     },
     header:{
         flexDirection:"row",
-        alignItems:"flex-start"
+        alignItems:"center",
+        height:40
     },
     searchTerm:{
         flexDirection:"row",
-        justifyContent:"flex-start",
+        //justifyContent:"flex-start",
         flex:1,
         padding:8,
         borderRadius:20

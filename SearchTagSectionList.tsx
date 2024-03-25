@@ -32,9 +32,9 @@ const Item=({item})=>{
 }
 
 const Items=({items})=>{
-    const itemList=items.map(item=><Item item={item}/>)
+    const itemList=items.map(item=><Item key={item} item={item}/>)
     return(
-        <View style={{flexDirection:"row",flexWrap:"wrap"}}>{itemList}</View>
+        <View  style={{flexDirection:"row",flexWrap:"wrap"}}>{itemList}</View>
     )
 }
 
@@ -44,8 +44,8 @@ const SearchTagSectionList=()=>{
             <SectionList style={{flex:1,margin:20}}  sections={Data} 
                 renderItem={({item})=><Items items={item}/>}  
                 renderSectionHeader={({section})=><Text style={{marginTop:10,marginBottom:10}}>{section.title}</Text>} 
-                >   
-            </SectionList>
+                 />   
+            
         </SafeAreaView>
     )
 }
