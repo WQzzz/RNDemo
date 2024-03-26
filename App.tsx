@@ -12,6 +12,7 @@ import MessageFlatList from './MessageFlatList';
 import VideoFlatList from './VideoFlatList';
 import PimsSectionList  from './PimsSectionList';
 import SearchTagSectionList from './SearchTagSectionList'
+import LogInPage from './LogInPage'
 
 import { 
   KeyboardAvoidingView,
@@ -71,7 +72,7 @@ function InputPage(){
 
 
 function App(): React.JSX.Element {
-  return <SearchTagSectionList/>;
+  return <LogInPage/>;
 }
 
 const styles = StyleSheet.create({
