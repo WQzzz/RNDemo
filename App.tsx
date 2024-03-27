@@ -13,6 +13,10 @@ import VideoFlatList from './VideoFlatList';
 import PimsSectionList  from './PimsSectionList';
 import SearchTagSectionList from './SearchTagSectionList'
 import LogInPage from './LogInPage'
+import Navig from './Navig';
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { 
   KeyboardAvoidingView,
@@ -70,9 +74,37 @@ function InputPage(){
   )
 }
 
+function DetailsScreen() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Details Screen</Text>
+    </View>
+  );
+}
+function HomeScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Home Screen</Text>
+      <Button
+        title="Go to Details"
+        onPress={() => navigation.navigate('Details')}
+      />
+    </View>
+  );
+}
+
+const Stack = createNativeStackNavigator();
 
 function App(): React.JSX.Element {
-  return <LogInPage/>;
+  return  (
+     <NavigationContainer>
+    {/* //    <Stack.Navigator initialRouteName="Home" screenOptions={{headerStyle:{backgroundColor:"pink"},headerTintColor:"white",headerTintStyle:{fontWeight:"bold"}}} >
+    //     <Stack.Screen name="Home" component={HomeScreen} options={{headerRight:()=><Button title="click me" color="white"></Button>}}/>
+    //     <Stack.Screen name="Details" component={DetailsScreen} options={{ title: 'Overview' }} />
+    //   </Stack.Navigator> */}
+    <Navig></Navig>
+     </NavigationContainer>)
+    
 }
 
 const styles = StyleSheet.create({
