@@ -8,7 +8,11 @@ import {
   View,
   TextInput,
   FlatList,
+  Button
 } from 'react-native';
+
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+const Stack = createNativeStackNavigator();
 
 const MessageData = [
   {
@@ -76,9 +80,25 @@ const MessageData = [
   },
 ];
 
-const renderItem = ({item}) => {
-  //renderItem
+const ItemDetail = ({ route,navigation}) => {
+
+  const { item } = route.params
   return (
+  <View style={{margin:10}}>
+    <Text>{item.title}</Text>
+    <Text>{item.time}</Text>
+    <Text>{item.content}</Text>
+    <Button title="go back" onPress={()=>{navigation.goBack()}}></Button>
+  </View>)
+}
+
+
+const RenderItem = ({item,navigation}) => {
+  
+  return(
+  <Pressable
+    onPress={() => {navigation.navigate("MessageItem",{item})}}
+  >
     <View style={styles.messageItem}>
       <Image
         source={require('./user.png')}
@@ -99,10 +119,10 @@ const renderItem = ({item}) => {
         </Text>
       </View>
     </View>
-  );
-};
+  </Pressable>
+);}
 
-const MessageFlatList = () => (
+const MessageFlatList = ({navigation}) => (
   <SafeAreaView style={{flex: 1}}>
     <View style={styles.header}>
       <Text style={{fontSize: 20, fontWeight: 'bold'}}>信息</Text>
@@ -132,10 +152,20 @@ const MessageFlatList = () => (
       <TextInput placeholder="搜索信息"></TextInput>
     </View>
     <View style={{flex: 1}}>
-      <FlatList renderItem={renderItem} data={MessageData} />
+      <FlatList
+        renderItem={({item})=><RenderItem item={item} navigation={navigation}/>}
+        data={MessageData}
+      />
     </View>
   </SafeAreaView>
 );
+
+const FlatListScreen=()=>(
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="MessageList" component={MessageFlatList} />
+    <Stack.Screen name="MessageItem" component={ItemDetail} />
+  </Stack.Navigator>
+)
 
 const styles = StyleSheet.create({
   header: {
@@ -170,4 +200,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MessageFlatList;
+export { MessageFlatList,ItemDetail,FlatListScreen};

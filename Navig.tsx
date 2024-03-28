@@ -5,14 +5,15 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 const Tab = createBottomTabNavigator()
 
 
-import FishFlatList from './FishFlatList';
-import PimsSectionList from './PimsSectionList';
+
+import {MessageFlatList, ItemDetail,FlatListScreen} from './MessageFlatList'
+import SearchTagSectionList from './SearchTagSectionList';
 
 function Navig() {
     return (
       <Tab.Navigator>
-        <Tab.Screen name="FlatList" component={FishFlatList} />
-        <Tab.Screen name="SectionList" component={PimsSectionList} />
+        <Tab.Screen name="FlatList" component={FlatListScreen} />
+        <Tab.Screen name="SectionList" component={SearchTagSectionList} />
       </Tab.Navigator>
     );
   }
