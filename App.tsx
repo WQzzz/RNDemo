@@ -79,12 +79,12 @@ function InputPage(){
 
 function App(): React.JSX.Element {
   return  (
-  // <NavigationContainer>
-  //   <Stack.Navigator screenOptions={{ headerShown: false }}>
-  //     <Stack.Screen name="Home" component={Navig} />
-  //   </Stack.Navigator>
-  // </NavigationContainer>
-  <LogInPage/>)
+  <NavigationContainer>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Home" component={Navig} />
+    </Stack.Navigator>
+  </NavigationContainer>
+ )
     
 }
 

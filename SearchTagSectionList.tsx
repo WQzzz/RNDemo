@@ -11,7 +11,7 @@ import {
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
-
+import { useNavigation } from '@react-navigation/native';
 const Data = [
   {
     title: 'Categories',
@@ -29,14 +29,17 @@ const Data = [
   },
 ];
 
-const ItemDetail = ({route, navigation}) => (
+const ItemDetail = ({route}) => {
+    const navigation = useNavigation();
+    return(
   <View>
     <Text>{route.params.item}</Text>
     <Button title='GO BACK' onPress={()=>{navigation.goBack()}}></Button>
   </View>
-);
+)};
 
-const Item = ({item, navigation}) => {
+const Item = ({item}) => {
+    const navigation = useNavigation();
   const [clicked, setClicked] = useState(false);
   return (
     <Pressable
@@ -50,22 +53,22 @@ const Item = ({item, navigation}) => {
   );
 };
 
-const Items = ({items, navigation}) => {
+const Items = ({items}) => {
   const itemList = items.map(item => (
-    <Item navigation={navigation} key={item} item={item} />
+    <Item key={item} item={item} />
   ));
   return (
     <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>{itemList}</View>
   );
 };
 
-const SearchTagSectionList = ({navigation}) => {
+const SearchTagSectionList = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <SectionList
         style={{flex: 1, margin: 20}}
         sections={Data}
-        renderItem={({item}) => <Items navigation={navigation} items={item} />}
+        renderItem={({item}) => <Items  items={item} />}
         renderSectionHeader={({section}) => (
           <Text style={{marginTop: 10, marginBottom: 10}}>{section.title}</Text>
         )}

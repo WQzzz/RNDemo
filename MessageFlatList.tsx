@@ -13,6 +13,7 @@ import {
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
+import { useNavigation } from '@react-navigation/native';
 
 const MessageData = [
   {
@@ -80,8 +81,8 @@ const MessageData = [
   },
 ];
 
-const ItemDetail = ({ route,navigation}) => {
-
+const ItemDetail = ({ route}) => {
+  const navigation = useNavigation();
   const { item } = route.params
   return (
   <View style={{margin:10}}>
@@ -93,8 +94,8 @@ const ItemDetail = ({ route,navigation}) => {
 }
 
 
-const RenderItem = ({item,navigation}) => {
-  
+const RenderItem = ({item}) => {
+  const navigation = useNavigation();
   return(
   <Pressable
     onPress={() => {navigation.navigate("MessageItem",{item})}}
@@ -122,7 +123,7 @@ const RenderItem = ({item,navigation}) => {
   </Pressable>
 );}
 
-const MessageFlatList = ({navigation}) => (
+const MessageFlatList = () => (
   <SafeAreaView style={{flex: 1}}>
     <View style={styles.header}>
       <Text style={{fontSize: 20, fontWeight: 'bold'}}>信息</Text>
@@ -153,7 +154,7 @@ const MessageFlatList = ({navigation}) => (
     </View>
     <View style={{flex: 1}}>
       <FlatList
-        renderItem={({item})=><RenderItem item={item} navigation={navigation}/>}
+        renderItem={({item})=><RenderItem item={item}/>}
         data={MessageData}
       />
     </View>
