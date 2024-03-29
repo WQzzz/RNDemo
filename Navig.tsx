@@ -6,14 +6,14 @@ const Tab = createBottomTabNavigator()
 
 
 
-import {MessageFlatList, ItemDetail,FlatListScreen} from './MessageFlatList'
-import SearchTagSectionList from './SearchTagSectionList';
+import {FlatListScreen} from './MessageFlatList'
+import {SearchTagScreen,SearchTagSectionList} from './SearchTagSectionList';
 
 function Navig() {
     return (
       <Tab.Navigator>
         <Tab.Screen name="FlatList" component={FlatListScreen} />
-        <Tab.Screen name="SectionList" component={SearchTagSectionList} />
+        <Tab.Screen name="SectionList" component={SearchTagScreen} />
       </Tab.Navigator>
     );
   }

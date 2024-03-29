@@ -161,7 +161,7 @@ const MessageFlatList = ({navigation}) => (
 );
 
 const FlatListScreen=()=>(
-  <Stack.Navigator screenOptions={{ headerShown: false }}>
+  <Stack.Navigator initialRouteName="MessageList" screenOptions={{ headerShown: false }}>
     <Stack.Screen name="MessageList" component={MessageFlatList} />
     <Stack.Screen name="MessageItem" component={ItemDetail} />
   </Stack.Navigator>

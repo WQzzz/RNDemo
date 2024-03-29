@@ -59,40 +59,42 @@ const LogInPage = () => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <KeyboardAvoidingView
-        style={{flex: 1, alignItems: 'center', margin: 30}}
+      <KeyboardAvoidingView style={{flex: 1}}
         behavior={'padding'}>
-        <Text style={styles.header}>Sign in</Text>
-        <FlatList
-          style={{maxHeight: 180}}
-          data={Data}
-          renderItem={renderSignInButton}
-        />
-        <Text style={{margin: 10, color: 'grey'}}>
-          —————————— or ——————————
-        </Text>
-        <Text style={{margin: 10}}>
-          Sign in with the same method you originally used to order your course
-        </Text>
-        <View style={styles.InputGroup}>
-          <Image />
-          <TextInput
-            style={{flex: 1}}
-            placeholder="Email Address"
-            onChangeText={setEmail}
-            value={email}></TextInput>
-        </View>
-        <View style={styles.InputGroup}>
-          <Image />
-          <TextInput
-            style={{flex: 1}}
-            placeholder="Your password"
-            onChangeText={setPassword}
-            value={password}
-            secureTextEntry={true}
+        <View  style={{flex: 1, alignItems: 'center', margin: 30}}>
+          <Text style={styles.header}>Sign in</Text>
+          <FlatList
+            style={{flex:1}}
+            data={Data}
+            renderItem={renderSignInButton}
           />
+          <Text style={{margin: 10, color: 'grey'}}>
+            —————————— or ——————————
+          </Text>
+          <Text style={{margin: 10}}>
+            Sign in with the same method you originally used to order your
+            course
+          </Text>
+          <View style={styles.InputGroup}>
+            <Image />
+            <TextInput
+              style={{flex: 1}}
+              placeholder="Email Address"
+              onChangeText={setEmail}
+              value={email}></TextInput>
+          </View>
+          <View style={styles.InputGroup}>
+            <Image />
+            <TextInput
+              style={{flex: 1}}
+              placeholder="Your password"
+              onChangeText={setPassword}
+              value={password}
+              secureTextEntry={true}
+            />
+          </View>
+          <Button title="Sign in" onPress={handleLogIn}></Button>
         </View>
-        <Button title="Sign in" onPress={handleLogIn}></Button>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -103,7 +105,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: 'bold',
     alignSelf: 'center',
-    margin: 20,
+    margin: 10,
   },
   InputGroup: {
     flexDirection: 'row',

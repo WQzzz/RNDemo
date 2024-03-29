@@ -11,7 +11,6 @@ import FishFlatList  from './FishFlatList';
 import {MessageFlatList,ItemDetail} from './MessageFlatList';
 import VideoFlatList from './VideoFlatList';
 import PimsSectionList  from './PimsSectionList';
-import SearchTagSectionList from './SearchTagSectionList'
 import LogInPage from './LogInPage'
 import Navig from './Navig';
 
@@ -80,11 +79,12 @@ function InputPage(){
 
 function App(): React.JSX.Element {
   return  (
-    <NavigationContainer>
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Home" component={Navig} />
-    </Stack.Navigator>
-  </NavigationContainer>)
+  // <NavigationContainer>
+  //   <Stack.Navigator screenOptions={{ headerShown: false }}>
+  //     <Stack.Screen name="Home" component={Navig} />
+  //   </Stack.Navigator>
+  // </NavigationContainer>
+  <LogInPage/>)
     
 }
 
