@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import {
   SafeAreaView,
   Image,
@@ -8,7 +8,8 @@ import {
   View,
   TextInput,
   FlatList,
-  Button
+  Button,
+  
 } from 'react-native';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -112,18 +113,37 @@ const RenderItem = ({item}) => {
             <Text style={{fontWeight: 'bold', fontSize: 15}}>{item.title}</Text>
           </View>
           <View>
-            <Text style={{color: 'grey', fontSize: 12}}>{item.time}</Text>
+            <Text style={{color: 'grey', fontSize: 12}}>{item.releaseYear}</Text>
           </View>
         </View>
         <Text style={{color: 'grey'}} numberOfLines={2} ellipsizeMode="tail">
-          {item.content}
+          {item.title}
         </Text>
       </View>
     </View>
   </Pressable>
 );}
 
-const MessageFlatList = () => (
+
+
+const MessageFlatList = () => {
+  const [data,setData] = useState(null)
+
+  useEffect(() => {
+    getMoviesFromApi();
+  }, []);
+
+  const getMoviesFromApi = () => {
+    return fetch('https://reactnative.dev/movies.json')
+      .then(response => response.json())
+      .then(json => {
+        setData(json.movies);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+  return (
   <SafeAreaView style={{flex: 1}}>
     <View style={styles.header}>
       <Text style={{fontSize: 20, fontWeight: 'bold'}}>信息</Text>
@@ -155,11 +175,11 @@ const MessageFlatList = () => (
     <View style={{flex: 1}}>
       <FlatList
         renderItem={({item})=><RenderItem item={item}/>}
-        data={MessageData}
+        data={data}
       />
     </View>
   </SafeAreaView>
-);
+)}
 
 const FlatListScreen=()=>(
   <Stack.Navigator initialRouteName="MessageList" screenOptions={{ headerShown: false }}>
