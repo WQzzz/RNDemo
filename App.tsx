@@ -6,171 +6,122 @@
  */
 
 import React, { useState } from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  Button,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-  Alert,
-  Image,
+import Page from './Basics';
+import FishFlatList  from './FishFlatList';
+import {MessageFlatList,ItemDetail} from './MessageFlatList';
+import VideoFlatList from './VideoFlatList';
+import PimsSectionList  from './PimsSectionList';
+import LogInPage from './LogInPage'
+import Navig from './Navig';
+
+import { NavigationContainer } from '@react-navigation/native';
+
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+const Stack = createNativeStackNavigator();
+
+
+import { 
+  KeyboardAvoidingView,
   TextInput,
-  TouchableHighlight,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  ImageBackground
+  Button,
+  Text,
+  Keyboard,
+  Platform,
+  StyleSheet,
+  SafeAreaView,
+  View,
+  Modal,
+  ScrollView,
+  Switch,
+  ActivityIndicator,
+  TouchableWithoutFeedback
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
+
+function InputPage(){
+  const [ModalVisible,setModalVisible]=useState(false)
+  const [switchEnable,setSwitchEnable]=useState(false)
+  return(
+  <SafeAreaView style={styles.container} onPress={()=>{Keyboard.dismiss}}>
+    <Modal visible={ModalVisible} transparent={true} animationType="slide">
+        <View style={{justifyContent:"center",flex:1,alignItems:"center"}}>
+        <View style={styles.modal}>
+          <ActivityIndicator color="pink" size="large"></ActivityIndicator>
+          <Button onPress={()=>{setModalVisible(false)}} title="Hide it"></Button>
+          <Text>This is a Modal</Text>
+        </View>
+        </View>
+    </Modal>
+    <Button color="black" title="show Modal" onPress={()=>{setModalVisible(true)}}></Button>
+    <ScrollView style={{flex:1}}>
+      <Text style={{fontSize:42,marginLeft: 20,marginRight: 20}} backgroundColor={switchEnable?"pink":"yellow"} onPress={()=>{Keyboard.dismiss}}>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
       </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
+    </ScrollView>
+    <Switch value={switchEnable} trackColor={{true:"pink"}} thumbColor={switchEnable?"white":"white"}   ios_backgroundColor="yellow" onValueChange={()=>setSwitchEnable(!switchEnable)}>
+    </Switch>
+    <KeyboardAvoidingView style={{flex:1,justifyContent:"center"}} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <Text>Please enter somethings</Text>
+      <TextInput keyboradType="default" style={{borderWidth:1}}></TextInput>
+      <Button title='submit'></Button>
+    </KeyboardAvoidingView>
+  </SafeAreaView>
+  )
 }
 
+
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  const [textEntered,setTextEntered]=useState("begin");
-  const [textIsDisabled,setTextIsDisabled]=useState(false);
- 
-
-  const backgroundStyle = {
-    flex:1,
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-    justifyContent:"space-evenly",
-    alignItems:"center"
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <View style={styles.buttonBox}>
-        <Button style={styles.button} title="Please please press me" onPress={()=>Alert.alert("pressed")} color="#f194ff" accessibilityLabel="Learn more about this purple button"></Button>
-        <Button style={styles.button} title="Press me" onPress={()=>Alert.alert("pressed")} color="black" accessibilityLabel="Learn more about this purple button"></Button>
-      </View>
-      <View style={styles.imageBox}>
-        <Image style={styles.smallImage}
-        source={{
-          url: 'https://reactnative.dev/img/tiny_logo.png',
-        }}></Image>
-         <Image style={styles.smallImage}
-        source={require('./image.jpg')}/>
-      </View>
-      <View style={styles.textBox}>
-        <Text>A</Text>
-        <Text style={{alignSelf:"center"}}>little</Text>
-        <Text style={{alignSelf:"flex-end"}}>cat</Text>
-        <Text style={{color:"red"}}>
-          <Text>sitting</Text>
-          <Text>here</Text>
-          <Text>{textEntered}</Text>
-        </Text>
-      </View>
-      <View style={{flexDirection:"row"}}>
-        <TextInput style={{minHeight:40, width:200,borderWidth:1}} 
-        onChangeText={(text)=>{setTextEntered(text);}}
-        editable={!textIsDisabled}
-        multiline={true}
-         />
-        <Button onPress={()=>setTextIsDisabled(!textIsDisabled)} title={textIsDisabled?"enable TextInput":"disable TextInput"}></Button>
-      </View>
-      <View style={{flexDirection:"row",alignSelf:"stretch",justifyContent:"space-around"}}>
-        <TouchableHighlight  onPress={()=>{Alert.alert("pressed")}}>
-          <View>
-            <Text style={styles.button}>test</Text>
-          </View>
-        </TouchableHighlight>
-        <TouchableOpacity onPress={()=>{Alert.alert("pressed")}}>
-          <View style={styles.button}>
-            <Text>test</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableWithoutFeedback onPress={()=>{Alert.alert("pressed")}}>
-          <View style={styles.button}>
-            <Text>test</Text>
-          </View>
-        </TouchableWithoutFeedback>
-      </View>
-      <ImageBackground source={{url: 'https://reactnative.dev/img/tiny_logo.png'}} style={{flex:1,justifyContent:"center"}} resizeMode="cover">
-        <Text style={{color:"white",backgroundColor:"pink",lineHeight:40}}>Guess what will be shown</Text>
-      </ImageBackground>
-    </SafeAreaView>
-  );
+  return  (
+  <NavigationContainer>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Home" component={Navig} />
+    </Stack.Navigator>
+  </NavigationContainer>
+ )
+    
 }
 
 const styles = StyleSheet.create({
-  buttonBox:{
-    backgroundColor:"white",
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  modal:{
+    justifyContent:"center",
+    alignItems:"center",
+    height:180,
+    width:180,
+    borderWidth:1,
+    backgroundColor:"white"
   },
-  button:{
-    backgroundColor:"pink",
+  container: {
+    flex: 1,
+    justifyContent:"center",
     alignItems:"center"
   },
-  imageBox:{
-    flexDirection:"row",
-    justifyContent:"space-evenly",
-    backgroundColor:"white",
+  inner: {
+    padding: 24,
+    flex: 1,
+    justifyContent: 'space-around',
   },
-  smallImage:{
-    height:100,
-    width:100,
+  header: {
+    fontSize: 36,
+    marginBottom: 48,
   },
-  textBox:{
-    minHeight:100,
-    justifyContent:"space-around",
-    alignItems:"flex-start",
+  textInput: {
+    height: 40,
+    borderColor: '#000000',
+    borderBottomWidth: 1,
+    marginBottom: 36,
   },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  btnContainer: {
+    backgroundColor: 'white',
+    marginTop: 12,
   },
 });
+
 
 export default App;
