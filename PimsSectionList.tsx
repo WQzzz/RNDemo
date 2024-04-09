@@ -1,4 +1,7 @@
-import React from 'react'
+import React ,{useEffect, useState} from 'react'
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+const Stack = createNativeStackNavigator();
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 import { 
     SafeAreaView,
@@ -12,6 +15,7 @@ import {
     TouchableHighlight
  } from "react-native";
 
+ const axios = require('axios').default;
 
 const PimsData=[
     {
@@ -71,35 +75,46 @@ const PimsData=[
             ]
     }
 ]
-// const PimsData=[
-//     {
-//         title:"Popular Free Lessons for English Speakers",
-//         data:[
-//           "Spanish",
-//           "French",
-//           "Italian",
-//           "German",
-//           "Chinese",
-//         ]
-//     },
-//     {
-//         title:"All Free Lessons for English Speakers",
-//         data:["GerAlbanianman","Arabic",
-//             ]
-//     }
-// ]
 
 const Item=({item})=>{
     return(
         <View style={styles.lessonItem}>
-            <Image style={{width:25,height:25,borderRadius:75,marginRight:5}}source={require("./image.jpg")}></Image>
-            <Text>{item.language}</Text>
+            {/* <Image style={{width:25,height:25,borderRadius:75,marginRight:5}}source={require("./image.jpg")}></Image> */}
+            <Icon name="rocket" size={30}/>
+            <Text>{item.language?item.language:item.title}</Text>
         </View>
     )
 }
 
 
 const PimsSectionList=()=>{
+    const [data,setData]= useState([])
+  
+
+    const getData=()=>
+    {axios.get('https://reactnative.dev/movies.json', {   
+    })
+    .then(function (response) {
+      let td=PimsData
+      td[0].title=response.data.title;
+      td[0].data=response.data.movies;
+      console.log(response.data.movies)
+      setData(td);
+    })
+    .catch(function (error:any) {
+      console.log(error);
+    })
+    .finally(function () {
+      // 总是会执行
+    }); } 
+  
+  
+    useEffect(()=>{
+      getData();
+    },[])
+
+
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
@@ -109,14 +124,24 @@ const PimsSectionList=()=>{
                 <Text style={styles.title}>I Want to Learn...</Text>
             </View>
             <View style={styles.list}>
-                <SectionList sections={PimsData}   renderItem={({item})=><Item item={item}/>}  
+                <SectionList sections={data}   renderItem={({item})=><Item item={item}/>}  
                 renderSectionHeader={({section})=>(<Text style={styles.listHeader}>{section.title}</Text>)} />
             </View>
-            <Pressable backgroundColor="#dcdcdc" style={{justifyContent:"center",alignItems:"center",borderRadius:20,padding:10,marginBottom:30,marginLeft:80,marginRight:80}}>
+            <Pressable style={{justifyContent:"center",alignItems:"center",borderRadius:20,padding:10,marginBottom:30,marginLeft:80,marginRight:80 ,backgroundColor:"#dcdcdc"}}>
                         <Text style={{color:"grey"}}>Next</Text>
                     </Pressable>
         </SafeAreaView>
         )
+}
+
+
+const PimsScreen=()=>{
+    return (
+    <Stack.Navigator initialRouteName="MessageList" screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="PimsList" component={PimsSectionList} />
+        {/* <Stack.Screen name="PimsItem" component={ItemDetail} /> */}
+      </Stack.Navigator>
+    )
 }
 
 const styles=StyleSheet.create({
@@ -155,4 +180,4 @@ const styles=StyleSheet.create({
     },
 })
 
-export default PimsSectionList
+export { PimsSectionList,PimsScreen}
