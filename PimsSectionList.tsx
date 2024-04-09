@@ -84,7 +84,7 @@ const PimsData=[
 const Item=({item})=>{
     return(
         <View style={styles.lessonItem}>
-            <Icon name="rocket" size={30}/>
+            <Icon name="play-circle" size={30}/>
             <Text>{item.language?item.language:item.title}</Text>
         </View>
     )

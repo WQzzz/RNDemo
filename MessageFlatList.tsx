@@ -12,6 +12,8 @@ import {
   
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/AntDesign'
+
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 import { useNavigation } from '@react-navigation/native';
@@ -102,11 +104,12 @@ const RenderItem = ({item}) => {
     onPress={() => {navigation.navigate("MessageItem",{item})}}
   >
     <View style={styles.messageItem}>
-      <Image
+      {/* <Image
         source={require('./user.png')}
         resizeMode="contain"
         style={{height: 30, width: 30, borderRadius: 20, marginRight: 10}}
-      />
+      /> */}
+      <Icon name="mail" size={30}/>
       <View style={{flex: 1}}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <View style={{marginBottom: 2}}>
