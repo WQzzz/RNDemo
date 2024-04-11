@@ -17,6 +17,11 @@ import {
 
  const axios = require('axios').default;
 
+ interface PimsListDate{
+    title:string,
+    data:[]
+ }
+
 const PimsData=[
     {
         title:"Popular Free Lessons for English Speakers",
@@ -79,8 +84,7 @@ const PimsData=[
 const Item=({item})=>{
     return(
         <View style={styles.lessonItem}>
-            {/* <Image style={{width:25,height:25,borderRadius:75,marginRight:5}}source={require("./image.jpg")}></Image> */}
-            <Icon name="rocket" size={30}/>
+            <Icon name="play-circle" size={30}/>
             <Text>{item.language?item.language:item.title}</Text>
         </View>
     )
@@ -88,18 +92,30 @@ const Item=({item})=>{
 
 
 const PimsSectionList=()=>{
-    const [data,setData]= useState([])
+    const [data,setData]= useState(PimsData)
   
 
     const getData=()=>
     {axios.get('https://reactnative.dev/movies.json', {   
     })
-    .then(function (response) {
-      let td=PimsData
-      td[0].title=response.data.title;
-      td[0].data=response.data.movies;
-      console.log(response.data.movies)
-      setData(td);
+    .then(function (response:any) {
+        // const tempData: PimsListDate = {
+        //     response.data.map((item: any) => {
+        //       // 对每个数组元素进行转换或处理
+        //       return {
+        //         title: item.title,
+        //         data: item.movies,
+        //         // 其他属性...
+        //       };
+        //     }),
+        //   };
+        const tempData: PimsListDate = {
+            title: response.data.title,
+            data: response.data.movies,
+          };
+
+   
+      setData([tempData]);
     })
     .catch(function (error:any) {
       console.log(error);
