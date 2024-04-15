@@ -13,6 +13,8 @@ import VideoFlatList from './VideoFlatList';
 import PimsSectionList  from './PimsSectionList';
 import LogInPage from './LogInPage'
 import Navig from './Navig';
+import store from './src/store'
+import { Provider } from 'react-redux'
 
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -80,9 +82,11 @@ function InputPage(){
 function App(): React.JSX.Element {
   return  (
   <NavigationContainer>
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Home" component={Navig} />
-    </Stack.Navigator>
+    <Provider store={store}>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Home" component={Navig} />
+      </Stack.Navigator>
+    </Provider>
   </NavigationContainer>
  )
     
