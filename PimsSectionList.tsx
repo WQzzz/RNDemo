@@ -2,6 +2,8 @@ import React ,{useEffect, useState} from 'react'
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { useSelector,useDispatch } from 'react-redux';
+import { initial } from './src/features/pimsData/pimsDataSlice';
 
 import { 
     SafeAreaView,
@@ -92,7 +94,9 @@ const Item=({item})=>{
 
 
 const PimsSectionList=()=>{
-    const [data,setData]= useState(PimsData)
+    // const [data,setData]= useState(PimsData)
+    const data=useSelector((state)=>state.pimsData)
+    const dispatch=useDispatch()
   
 
     const getData=()=>
@@ -114,8 +118,8 @@ const PimsSectionList=()=>{
             data: response.data.movies,
           };
 
-   
-      setData([tempData]);
+          dispatch(initial([tempData]))
+      //setData([tempData]);
     })
     .catch(function (error:any) {
       console.log(error);

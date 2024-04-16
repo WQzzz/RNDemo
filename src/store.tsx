@@ -1,5 +1,6 @@
 import { configureStore,combineReducers } from '@reduxjs/toolkit'
 import messageDataReducer from './features/messageData/messageDataSlice'
+import pimsDataReducer from './features/pimsData/pimsDataSlice'
 import { persistReducer,persistStore,FLUSH,
     REHYDRATE,
     PAUSE,
@@ -11,11 +12,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 const persistConfig={
     key:'root',
     storage:AsyncStorage,
+    blacklist:'pimsData'
 }
 
 
 const rootReducer = combineReducers({
-    messageData: messageDataReducer
+    messageData: messageDataReducer,
+    pimsData:pimsDataReducer
   });
 
 

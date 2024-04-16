@@ -5,7 +5,6 @@ const messageDataSlice = createSlice({
   initialState: '',
   reducers: {
     initial: (state, action) => {
-        console.log(action.payload);
         return action.payload;
     },
   },
