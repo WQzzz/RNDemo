@@ -86,7 +86,7 @@ const MessageData = [
   },
 ];
 
-const ItemDetail = ({ route}) => {
+const ItemDetail = ({route}) => {
   const navigation = useNavigation();
   const { item } = route.params
   return (
@@ -103,7 +103,7 @@ const RenderItem = ({item}) => {
   const navigation = useNavigation();
   return(
   <Pressable
-    onPress={() => {navigation.navigate("MessageItem",{item})}}
+    onPress={() => {navigation.navigate('MessageItem', { item })}}
   >
     <View style={styles.messageItem}>
       {/* <Image
