@@ -6,12 +6,15 @@ import {
   Text,
   StyleSheet,
   Pressable,
-  Button
+  Button,
 } from 'react-native';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+import {useSelector, useDispatch} from 'react-redux';
+import {change, initial} from './src/features/searchData/searchDataSlice';
+
 const Data = [
   {
     title: 'Categories',
@@ -30,22 +33,36 @@ const Data = [
 ];
 
 const ItemDetail = ({route}) => {
-    const navigation = useNavigation();
-    return(
-  <View>
-    <Text>{route.params.item}</Text>
-    <Button title='GO BACK' onPress={()=>{navigation.goBack()}}></Button>
-  </View>
-)};
+  const navigation = useNavigation();
+  return (
+    <View>
+      <Text>{route.params.item}</Text>
+      <Button
+        title="GO BACK"
+        onPress={() => {
+          navigation.goBack();
+        }}></Button>
+    </View>
+  );
+};
 
 const Item = ({item}) => {
-    const navigation = useNavigation();
-  const [clicked, setClicked] = useState(false);
+  const navigation = useNavigation();
+  //const [clicked, setClicked] = useState(false);
+  const datas = useSelector(state => state.searchData.items);
+  const dispatch = useDispatch();
+
+  if (datas.find(data => data.id === item) === undefined) {
+    dispatch(initial(item));
+  }
+
+  let clicked = datas.find(data => data.id === item)?.active;
+
   return (
     <Pressable
       style={clicked ? styles.itemClicked : styles.item}
       onPress={() => {
-        setClicked(!clicked);
+        dispatch(change(item));
         navigation.navigate('PimsItem', {item});
       }}>
       <Text style={{color: clicked ? 'blue' : 'grey'}}>{item}</Text>
@@ -54,9 +71,7 @@ const Item = ({item}) => {
 };
 
 const Items = ({items}) => {
-  const itemList = items.map(item => (
-    <Item key={item} item={item} />
-  ));
+  const itemList = items.map(item => <Item key={item} item={item} />);
   return (
     <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>{itemList}</View>
   );
@@ -68,7 +83,7 @@ const SearchTagSectionList = () => {
       <SectionList
         style={{flex: 1, margin: 20}}
         sections={Data}
-        renderItem={({item}) => <Items  items={item} />}
+        renderItem={({item}) => <Items items={item} />}
         renderSectionHeader={({section}) => (
           <Text style={{marginTop: 10, marginBottom: 10}}>{section.title}</Text>
         )}
