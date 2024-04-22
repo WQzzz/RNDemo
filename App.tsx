@@ -58,7 +58,7 @@ function InputPage(){
     </Modal>
     <Button color="black" title="show Modal" onPress={()=>{setModalVisible(true)}}></Button>
     <ScrollView style={{flex:1}}>
-      <Text style={{fontSize:42,marginLeft: 20,marginRight: 20}} backgroundColor={switchEnable?"pink":"yellow"} onPress={()=>{Keyboard.dismiss}}>
+      <Text style={{fontSize:42,marginLeft: 20,marginRight: 20 , backgroundColor:switchEnable?"pink":"yellow"}} onPress={()=>{Keyboard.dismiss}}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut

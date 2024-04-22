@@ -12,13 +12,15 @@ const searchDataSlice = createSlice({
   },
   reducers: {
     change: (state, action) => {
-      if (state.items.find(item => item.id === action.payload) != undefined) {
-        let item = state.items.find(item => item.id === action.payload);
-        item.active = !item?.active;
-      }
+      const item = state.items.find(item => item.id === action.payload);
+        if(item)
+        {
+          item.active = !item.active;
+        }
     },
     initial: (state, action) => {
-      if (state.items.find(item => item.id === action.payload) === undefined) {
+      const item =state.items.find(item => item.id === action.payload)
+      if (!item) {
         state.items.push({id: action.payload, active: false});
       }
     },

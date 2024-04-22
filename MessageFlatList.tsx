@@ -1,4 +1,5 @@
 import React, { useState,useEffect } from 'react';
+import {BSON, ObjectSchema, Realm} from 'realm'
 import { initial } from './src/features/messageData/messageDataSlice';
 import {
   SafeAreaView,
@@ -12,6 +13,26 @@ import {
   Button,
   
 } from 'react-native';
+
+import { RealmProvider, useObject, useQuery, useRealm } from '@realm/react';
+import 'react-native-get-random-values'
+export class Message extends Realm.Object<Message>{
+  _id!: BSON.ObjectId;
+  content!: string;
+  title!: string;
+  time!: string;
+
+  static schema:ObjectSchema={
+    name:"message",
+    properties:{
+      _id:"objectId",
+      title:{type:"string", indexed:true },
+      time:{type:"string", indexed:true },
+      content:{type:"string", indexed:true }
+    },
+    primaryKey:'_id'
+  }
+}
 
 import Icon from 'react-native-vector-icons/AntDesign'
 
@@ -118,11 +139,11 @@ const RenderItem = ({item}) => {
             <Text style={{fontWeight: 'bold', fontSize: 15}}>{item.title}</Text>
           </View>
           <View>
-            <Text style={{color: 'grey', fontSize: 12}}>{item.releaseYear}</Text>
+            <Text style={{color: 'grey', fontSize: 12}}>{item.time}</Text>
           </View>
         </View>
         <Text style={{color: 'grey'}} numberOfLines={2} ellipsizeMode="tail">
-          {item.title}
+          {item.content}
         </Text>
       </View>
     </View>
@@ -132,8 +153,23 @@ const RenderItem = ({item}) => {
 
 
 const MessageFlatList = () => {
-  let data=useSelector((state) => state.messageData)
-  const dispatch=useDispatch();
+  const dispatch=useDispatch();  
+  let data=useQuery(Message);
+
+  const realm = useRealm();
+  const handleAddMessage=()=>{
+    console.log("message added")
+    realm.write(()=>{
+      realm.create('message',{
+        _id:new BSON.ObjectId(),
+        title:'vivo钱包',
+        content:'恭喜您获得移动流量礼包＞>',
+        time:'昨天19:24'
+      })
+    })
+
+  }
+
 
   useEffect(() => {
     getMoviesFromApi();
@@ -143,7 +179,6 @@ const MessageFlatList = () => {
     return fetch('https://reactnative.dev/movies.json')
       .then(response => response.json())
       .then(json => {
-        //setData(json.movies);
         dispatch(initial(json.movies));
         console.log("dispatched")
       })
@@ -186,14 +221,21 @@ const MessageFlatList = () => {
         data={data}
       />
     </View>
+    <Text style={{textAlign:"center"}}>读取信息总数：{data.length}条</Text>
+    <Button
+        title="Add Message"
+        onPress={handleAddMessage}
+      />
   </SafeAreaView>
 )}
 
 const FlatListScreen=()=>(
+  <RealmProvider schema={[Message]}>
   <Stack.Navigator initialRouteName="MessageList" screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="MessageList" component={MessageFlatList} />
+      <Stack.Screen name="MessageList" component={MessageFlatList} />
     <Stack.Screen name="MessageItem" component={ItemDetail} />
   </Stack.Navigator>
+  </RealmProvider>
 )
 
 const styles = StyleSheet.create({
