@@ -10,9 +10,12 @@ import Page from './Basics';
 import FishFlatList  from './FishFlatList';
 import {MessageFlatList,ItemDetail} from './MessageFlatList';
 import VideoFlatList from './VideoFlatList';
-import PimsSectionList  from './PimsSectionList';
+import {PimsSectionList}  from './PimsSectionList';
 import LogInPage from './LogInPage'
 import Navig from './Navig';
+import {store, persistor} from './src/store'
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react';
 
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -43,7 +46,7 @@ function InputPage(){
   const [ModalVisible,setModalVisible]=useState(false)
   const [switchEnable,setSwitchEnable]=useState(false)
   return(
-  <SafeAreaView style={styles.container} onPress={()=>{Keyboard.dismiss}}>
+  <SafeAreaView style={styles.container} >
     <Modal visible={ModalVisible} transparent={true} animationType="slide">
         <View style={{justifyContent:"center",flex:1,alignItems:"center"}}>
         <View style={styles.modal}>
@@ -69,7 +72,7 @@ function InputPage(){
     </Switch>
     <KeyboardAvoidingView style={{flex:1,justifyContent:"center"}} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <Text>Please enter somethings</Text>
-      <TextInput keyboradType="default" style={{borderWidth:1}}></TextInput>
+      <TextInput keyboardType="default" style={{borderWidth:1}}></TextInput>
       <Button title='submit'></Button>
     </KeyboardAvoidingView>
   </SafeAreaView>
@@ -80,9 +83,13 @@ function InputPage(){
 function App(): React.JSX.Element {
   return  (
   <NavigationContainer>
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Home" component={Navig} />
-    </Stack.Navigator>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Home" component={Navig} />
+        </Stack.Navigator>
+        </PersistGate>
+    </Provider>
   </NavigationContainer>
  )
     

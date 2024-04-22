@@ -1,4 +1,5 @@
 import React, { useState,useEffect } from 'react';
+import { initial } from './src/features/messageData/messageDataSlice';
 import {
   SafeAreaView,
   Image,
@@ -17,6 +18,7 @@ import Icon from 'react-native-vector-icons/AntDesign'
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
 
 const MessageData = [
   {
@@ -84,7 +86,7 @@ const MessageData = [
   },
 ];
 
-const ItemDetail = ({ route}) => {
+const ItemDetail = ({route}) => {
   const navigation = useNavigation();
   const { item } = route.params
   return (
@@ -101,7 +103,7 @@ const RenderItem = ({item}) => {
   const navigation = useNavigation();
   return(
   <Pressable
-    onPress={() => {navigation.navigate("MessageItem",{item})}}
+    onPress={() => {navigation.navigate('MessageItem', { item })}}
   >
     <View style={styles.messageItem}>
       {/* <Image
@@ -130,7 +132,8 @@ const RenderItem = ({item}) => {
 
 
 const MessageFlatList = () => {
-  const [data,setData] = useState(null)
+  let data=useSelector((state) => state.messageData)
+  const dispatch=useDispatch();
 
   useEffect(() => {
     getMoviesFromApi();
@@ -140,7 +143,9 @@ const MessageFlatList = () => {
     return fetch('https://reactnative.dev/movies.json')
       .then(response => response.json())
       .then(json => {
-        setData(json.movies);
+        //setData(json.movies);
+        dispatch(initial(json.movies));
+        console.log("dispatched")
       })
       .catch(error => {
         console.error(error);
