@@ -159,6 +159,7 @@ const RenderItem = ({item}) => {
 };
 
 const MessageFlatList = () => {
+  const [isStateData, setIsStateData]=useState(false);
   const dispatch = useDispatch();
   let data = useQuery(Message);
 
@@ -193,8 +194,7 @@ const MessageFlatList = () => {
       });
   };
 
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const toggleSwitch = () => setIsStateData(previousState => !previousState);
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -206,7 +206,7 @@ const MessageFlatList = () => {
             source={require('./Accept.png')}
             resizeMode="contain"
           />
-          <Switch onValueChange={toggleSwitch} value={isEnabled} />
+          <Switch onValueChange={toggleSwitch} value={isStateData} />
           <Image
             style={{height: 20, width: 20}}
             source={require('./set.png')}
@@ -224,10 +224,10 @@ const MessageFlatList = () => {
       <View style={{flex: 1}}>
         <FlatList
           renderItem={({item}) => <RenderItem item={item} />}
-          data={isEnabled?data:ApidData}
+          data={isStateData?ApidData:data}
         />
       </View>
-      <Text style={{textAlign: 'center'}}>读取信息总数：{data.length}条</Text>
+      <Text style={{textAlign: 'center'}}>DB读取信息总数：{data.length}条</Text>
       <Button title="Add Message" onPress={handleAddMessage} />
     </SafeAreaView>
   );
