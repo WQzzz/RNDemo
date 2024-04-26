@@ -13,7 +13,7 @@ import VideoFlatList from './VideoFlatList';
 import {PimsSectionList}  from './PimsSectionList';
 import LogInPage from './LogInPage'
 import Navig from './Navig';
-import {store, persistor} from './src/store'
+import {store, persistor} from '../store'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react';
 

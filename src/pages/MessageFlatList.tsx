@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {BSON, ObjectSchema, Realm} from 'realm';
-import {initial} from './src/features/messageData/messageDataSlice';
+import {initial} from '../features/messageData/messageDataSlice';
 import {
   SafeAreaView,
   Image,
@@ -13,34 +13,13 @@ import {
   Button,
   Switch,
 } from 'react-native';
-
 import {RealmProvider, useObject, useQuery, useRealm} from '@realm/react';
 import 'react-native-get-random-values';
-export class Message extends Realm.Object<Message> {
-  _id!: BSON.ObjectId;
-  content!: string;
-  title!: string;
-  time!: string;
-
-  static schema: ObjectSchema = {
-    name: 'message',
-    properties: {
-      _id: 'objectId',
-      title: {type: 'string', indexed: true},
-      time: {type: 'string', indexed: true},
-      content: {type: 'string', indexed: true},
-    },
-    primaryKey: '_id',
-  };
-}
-
 import Icon from 'react-native-vector-icons/AntDesign';
-
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-const Stack = createNativeStackNavigator();
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-
+const Stack = createNativeStackNavigator();
 const MessageData = [
   {
     key: 1,
@@ -107,7 +86,29 @@ const MessageData = [
   },
 ];
 
-const ItemDetail = ({route}:{route:any}) => {
+export class Message extends Realm.Object<Message> {
+  _id!: BSON.ObjectId;
+  content!: string;
+  title!: string;
+  time!: string;
+
+  static schema: ObjectSchema = {
+    name: 'message',
+    properties: {
+      _id: 'objectId',
+      title: {type: 'string', indexed: true},
+      time: {type: 'string', indexed: true},
+      content: {type: 'string', indexed: true},
+    },
+    primaryKey: '_id',
+  };
+}
+
+interface RootState {
+  messageData: [{title: string; time: string; content: string}];
+}
+
+const ItemDetail = ({route}: {route: any}) => {
   const navigation = useNavigation();
   const {item} = route.params;
   return (
@@ -124,12 +125,13 @@ const ItemDetail = ({route}:{route:any}) => {
   );
 };
 
-const RenderItem = ({item}:{item:any}) => {
+const RenderItem = ({item}: {item: any}) => {
+  //小写
   const navigation = useNavigation();
   return (
     <Pressable
       onPress={() => {
-        navigation.navigate("MessageItem" as never, {item} as never);
+        navigation.navigate('MessageItem' as never, {item} as never);
       }}>
       <View style={styles.messageItem}>
         {/* <Image
@@ -146,11 +148,13 @@ const RenderItem = ({item}:{item:any}) => {
               </Text>
             </View>
             <View>
-              <Text style={{color: 'grey', fontSize: 12}}>{item.time??item.releaseYear}</Text>
+              <Text style={{color: 'grey', fontSize: 12}}>
+                {item.time ?? item.releaseYear}
+              </Text>
             </View>
           </View>
           <Text style={{color: 'grey'}} numberOfLines={2} ellipsizeMode="tail">
-            {item.content??item.title}
+            {item.content ?? item.title}
           </Text>
         </View>
       </View>
@@ -159,7 +163,7 @@ const RenderItem = ({item}:{item:any}) => {
 };
 
 const MessageFlatList = () => {
-  const [isStateData, setIsStateData]=useState(false);
+  const [isStateData, setIsStateData] = useState(false);
   const dispatch = useDispatch();
   let data = useQuery(Message);
 
@@ -176,14 +180,10 @@ const MessageFlatList = () => {
     });
   };
 
-  interface RootState {
-    messageData:  [{title: string; time: string;content:string}];
-  }
-
-  let ApidData=useSelector((state:RootState)=>state.messageData)
+  let ApidData = useSelector((state: RootState) => state.messageData);
 
   useEffect(() => {
-    getMoviesFromApi();
+    getMoviesFromApi(); //loading 等拿到结果后更改loading 渲染loading效果
   }, []);
 
   const getMoviesFromApi = () => {
@@ -207,13 +207,13 @@ const MessageFlatList = () => {
         <Pressable style={styles.buttonGroup}>
           <Image
             style={{height: 20, width: 20}}
-            source={require('./Accept.png')}
+            source={require('../images/Accept.png')}
             resizeMode="contain"
           />
           <Switch onValueChange={toggleSwitch} value={isStateData} />
           <Image
             style={{height: 20, width: 20}}
-            source={require('./set.png')}
+            source={require('../images/set.png')}
             resizeMode="contain"
           />
         </Pressable>
@@ -221,14 +221,14 @@ const MessageFlatList = () => {
       <View style={styles.searchTerm}>
         <Image
           style={{height: 15, width: 15, marginRight: 10}}
-          source={require('./search.png')}
+          source={require('../images/search.png')}
         />
         <TextInput placeholder="搜索信息"></TextInput>
       </View>
       <View style={{flex: 1}}>
         <FlatList
           renderItem={({item}) => <RenderItem item={item} />}
-          data={isStateData?ApidData:data}
+          data={isStateData ? ApidData : data}
         />
       </View>
       <Text style={{textAlign: 'center'}}>DB读取信息总数：{data.length}条</Text>
@@ -238,6 +238,7 @@ const MessageFlatList = () => {
 };
 
 const FlatListScreen = () => (
+  //route page
   <RealmProvider schema={[Message]}>
     <Stack.Navigator
       initialRouteName="MessageList"

@@ -13,7 +13,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 import {Route, useNavigation, useRoute} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
-import {change, initial} from './src/features/searchData/searchDataSlice';
+import {change, initial} from '../features/searchData/searchDataSlice';
 import { RouteProp } from '@react-navigation/native';
 import { ParamListBase } from '@react-navigation/routers';
 

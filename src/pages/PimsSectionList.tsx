@@ -3,7 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useSelector, useDispatch} from 'react-redux';
-import {initial} from './src/features/pimsData/pimsDataSlice';
+import {initial} from '../features/pimsData/pimsDataSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   SafeAreaView,
@@ -132,25 +132,18 @@ const PimsSectionList = () => {
   };
 
   useEffect(() => {
-    // getData();
     console.log('组件渲染');
     getAsyncData();
-
-    // return () => {
-    //   // 在组件即将卸载前写入数据库
-    //   console.log("组件卸载")
-    //   console.log(data)
-    //   updateMovie(data);
-    //   console.log("组件已卸载")
-    // };
   }, []);
 
   const getAsyncData = async () => {
     try {
       console.log('进入getAsyncData');
       const jsonValue = await AsyncStorage.getItem('PimsData');
-      console.log("拉得数据："+jsonValue);
+      console.log("拉得数据：");
+      console.log(jsonValue);
       if (jsonValue != null) {
+        console.log("已拉取到数据")
         setData(JSON.parse(jsonValue));
       } else {
         initialList();
@@ -159,8 +152,7 @@ const PimsSectionList = () => {
       console.log(e);
       // error reading value
     } finally{
-        console.log('读后状态');
-        console.log(data);
+        console.log('读后');
     }
   };
 
