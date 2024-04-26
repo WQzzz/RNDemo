@@ -84,13 +84,13 @@ const PimsData = [
   },
 ];
 
-const Item = ({item}) => {
+const Item = ({item}:{item:string}) => {
   // console.log(item)
   return (
     <View style={styles.lessonItem}>
       <Icon name="play-circle" size={30} />
       <Text style={{paddingLeft: 10}}>
-        {item.language ? item.language : item}
+        {item}
       </Text>
     </View>
   );

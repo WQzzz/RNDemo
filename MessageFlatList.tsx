@@ -107,7 +107,7 @@ const MessageData = [
   },
 ];
 
-const ItemDetail = ({route}) => {
+const ItemDetail = ({route}:{route:any}) => {
   const navigation = useNavigation();
   const {item} = route.params;
   return (
@@ -124,12 +124,12 @@ const ItemDetail = ({route}) => {
   );
 };
 
-const RenderItem = ({item}) => {
+const RenderItem = ({item}:{item:any}) => {
   const navigation = useNavigation();
   return (
     <Pressable
       onPress={() => {
-        navigation.navigate('MessageItem', {item});
+        navigation.navigate("MessageItem" as never, {item} as never);
       }}>
       <View style={styles.messageItem}>
         {/* <Image
@@ -176,7 +176,11 @@ const MessageFlatList = () => {
     });
   };
 
-  let ApidData=useSelector((state)=>state.messageData)
+  interface RootState {
+    messageData:  [{title: string; time: string;content:string}];
+  }
+
+  let ApidData=useSelector((state:RootState)=>state.messageData)
 
   useEffect(() => {
     getMoviesFromApi();

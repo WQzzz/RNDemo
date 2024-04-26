@@ -11,9 +11,11 @@ import {
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
-import {useNavigation} from '@react-navigation/native';
+import {Route, useNavigation, useRoute} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
 import {change, initial} from './src/features/searchData/searchDataSlice';
+import { RouteProp } from '@react-navigation/native';
+import { ParamListBase } from '@react-navigation/routers';
 
 const Data = [
   {
@@ -32,11 +34,35 @@ const Data = [
   },
 ];
 
-const ItemDetail = ({route}) => {
+interface RootState {
+  searchData: {items: [{id: string; active: boolean}]};
+}
+
+type RootStackParamList = {
+  PimsItem: { item: string }; 
+};
+
+// const ItemDetail  = ()  => {
+//   const navigation = useNavigation();
+//   const route = useRoute<RouteProp<RootStackParamList, 'PimsItem'>>();
+//   return (
+//     <View>
+//       <Text>{route.params?.item}</Text>
+//       <Button
+//         title="GO BACK"
+//         onPress={() => {
+//           navigation.goBack();
+//         }}></Button>
+//     </View>
+//   );
+// };
+
+const ItemDetail  = ({route}:{route:any})  => {
   const navigation = useNavigation();
+  const {title} = route.params;
   return (
     <View>
-      <Text>{route.params.item}</Text>
+      <Text>{title}</Text>
       <Button
         title="GO BACK"
         onPress={() => {
@@ -46,10 +72,10 @@ const ItemDetail = ({route}) => {
   );
 };
 
-const Item = ({item}) => {
+const Item = ({item}: {item: string}) => {
   const navigation = useNavigation();
   //const [clicked, setClicked] = useState(false);
-  const datas = useSelector(state => state.searchData.items);
+  const datas = useSelector((state: RootState) => state.searchData.items);
   const dispatch = useDispatch();
 
   if (datas.find(data => data.id === item) === undefined) {
@@ -63,14 +89,14 @@ const Item = ({item}) => {
       style={clicked ? styles.itemClicked : styles.item}
       onPress={() => {
         dispatch(change(item));
-        navigation.navigate('PimsItem', {item});
-      }}>
+        navigation.navigate("PimsItem" as never , {item} as never);
+      }}> 
       <Text style={{color: clicked ? 'blue' : 'grey'}}>{item}</Text>
     </Pressable>
   );
 };
 
-const Items = ({items}) => {
+const Items = ({items}: {items: string[]}) => {
   const itemList = items.map(item => <Item key={item} item={item} />);
   return (
     <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>{itemList}</View>
