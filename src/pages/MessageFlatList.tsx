@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {BSON, ObjectSchema, Realm} from 'realm';
+import {BSON} from 'realm';
 import {initial} from '../features/messageData/messageDataSlice';
 import {
   SafeAreaView,
@@ -19,26 +19,8 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
+import { Message } from '../model/Message';
 const Stack = createNativeStackNavigator();
-
-export class Message extends Realm.Object<Message> {
-  _id!: BSON.ObjectId;
-  content!: string;
-  title!: string;
-  time!: string;
-
-  static schema: ObjectSchema = {
-    name: 'message',
-    properties: {
-      _id: 'objectId',
-      title: {type: 'string', indexed: true},
-      time: {type: 'string', indexed: true},
-      content: {type: 'string', indexed: true},
-    },
-    primaryKey: '_id',
-  };
-}
-
 
 const ItemDetail = ({route}: {route: any}) => {
   const [isEdit, setIsEdit] = useState(false);
