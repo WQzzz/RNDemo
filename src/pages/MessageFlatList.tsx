@@ -109,13 +109,66 @@ interface RootState {
 }
 
 const ItemDetail = ({route}: {route: any}) => {
+  const [isEdit, setIsEdit] = useState(false);
   const navigation = useNavigation();
   const {item} = route.params;
+  const [message, setMessage] = useState(item);
+  const realm = useRealm();
+  const myTask = useObject(Message, item._id);
   return (
     <View style={{margin: 10}}>
-      <Text>{item.title}</Text>
-      <Text>{item.time}</Text>
-      <Text>{item.content}</Text>
+      {isEdit ? (
+        <View>
+          <TextInput
+            style={{backgroundColor: 'white', margin: 2, borderWidth: 1}}
+            value={message.title}
+            onChangeText={text => {
+              setMessage({...message, title: text});
+            }}></TextInput>
+          <TextInput
+            style={{backgroundColor: 'white', margin: 2, borderWidth: 1}}
+            value={message.time}
+            onChangeText={text => {
+              setMessage({...message, time: text});
+            }}></TextInput>
+          <TextInput
+            style={{backgroundColor: 'white', margin: 2, borderWidth: 1}}
+            value={message.content}
+            onChangeText={text => {
+              setMessage({...message, content: text});
+            }}></TextInput>
+        </View>
+      ) : (
+        <View>
+          <Text>{message.title}</Text>
+          <Text>{message.time}</Text>
+          <Text>{message.content}</Text>
+        </View>
+      )}
+      <Button
+        title={isEdit ? 'finish edit' : 'edit'}
+        onPress={() => {
+          if (isEdit) {
+            if (myTask) {
+              realm.write(() => {
+                myTask.title = message.title;
+                myTask.content = message.content;
+                myTask.time = message.time;
+              });
+            }
+          }
+          setIsEdit(!isEdit);
+        }}></Button>
+      <Button
+        title="delete"
+        onPress={() => {
+          if (myTask) {
+            realm.write(() => {
+              realm.delete(myTask);
+            });
+          }
+          navigation.goBack();
+        }}></Button>
       <Button
         title="go back"
         onPress={() => {
