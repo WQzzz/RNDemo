@@ -20,71 +20,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 const Stack = createNativeStackNavigator();
-const MessageData = [
-  {
-    key: 1,
-    image: '',
-    title: '中国移动',
-    time: '昨天19:24',
-    content:
-      '筑牢反邪防线，共建和谐社会。坚决防范打击邪教组织违法活动，发现相关线索请及时拨打110报',
-  },
-  {
-    key: 2,
-    image: '',
-    title: '中国移动',
-    time: '昨天19:24',
-    content:
-      '筑牢反邪防线，共建和谐社会。坚决防范打击邪教组织违法活动，发现相关线索请及时拨打110报',
-  },
-  {
-    key: 3,
-    image: '',
-    title: 'vivo钱包',
-    time: '昨天19:24',
-    content: '恭喜您获得移动流量礼包＞>',
-  },
-  {
-    key: 4,
-    image: '',
-    title: '滴滴出行',
-    time: '昨天09:13',
-    content:
-      '【滴滴出行】滴滴羊毛薅起来！打车只要65折，去領券https://c.didi.cn/UfI5Cxx拒收请回复R',
-  },
-  {
-    key: 5,
-    image: '',
-    title: '中国移动',
-    time: '昨天19:24',
-    content:
-      '筑牢反邪防线，共建和谐社会。坚决防范打击邪教组织违法活动，发现相关线索请及时拨打110报',
-  },
-  {
-    key: 6,
-    image: '',
-    title: '中国移动',
-    time: '昨天19:24',
-    content:
-      '筑牢反邪防线，共建和谐社会。坚决防范打击邪教组织违法活动，发现相关线索请及时拨打110报',
-  },
-  {
-    key: 7,
-    image: '',
-    title: '中国移动',
-    time: '昨天19:24',
-    content:
-      '筑牢反邪防线，共建和谐社会。坚决防范打击邪教组织违法活动，发现相关线索请及时拨打110报',
-  },
-  {
-    key: 8,
-    image: '',
-    title: '中国移动',
-    time: '昨天19:24',
-    content:
-      '筑牢反邪防线，共建和谐社会。坚决防范打击邪教组织违法活动，发现相关线索请及时拨打110报',
-  },
-];
 
 export class Message extends Realm.Object<Message> {
   _id!: BSON.ObjectId;
@@ -104,9 +39,6 @@ export class Message extends Realm.Object<Message> {
   };
 }
 
-interface RootState {
-  messageData: [{title: string; time: string; content: string}];
-}
 
 const ItemDetail = ({route}: {route: any}) => {
   const [isEdit, setIsEdit] = useState(false);
@@ -216,8 +148,6 @@ const RenderItem = ({item}: {item: any}) => {
 };
 
 const MessageFlatList = () => {
-  const [isStateData, setIsStateData] = useState(false);
-  const dispatch = useDispatch();
   let data = useQuery(Message);
 
   const realm = useRealm();
@@ -233,26 +163,6 @@ const MessageFlatList = () => {
     });
   };
 
-  let ApidData = useSelector((state: RootState) => state.messageData);
-
-  useEffect(() => {
-    getMoviesFromApi(); //loading 等拿到结果后更改loading 渲染loading效果
-  }, []);
-
-  const getMoviesFromApi = () => {
-    return fetch('https://reactnative.dev/movies.json')
-      .then(response => response.json())
-      .then(json => {
-        dispatch(initial(json.movies));
-        console.log('dispatched');
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  };
-
-  const toggleSwitch = () => setIsStateData(previousState => !previousState);
-
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={styles.header}>
@@ -263,7 +173,6 @@ const MessageFlatList = () => {
             source={require('../images/Accept.png')}
             resizeMode="contain"
           />
-          <Switch onValueChange={toggleSwitch} value={isStateData} />
           <Image
             style={{height: 20, width: 20}}
             source={require('../images/set.png')}
@@ -281,7 +190,7 @@ const MessageFlatList = () => {
       <View style={{flex: 1}}>
         <FlatList
           renderItem={({item}) => <RenderItem item={item} />}
-          data={isStateData ? ApidData : data}
+          data={data}
         />
       </View>
       <Text style={{textAlign: 'center'}}>DB读取信息总数：{data.length}条</Text>

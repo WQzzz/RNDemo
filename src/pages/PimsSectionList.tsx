@@ -84,14 +84,18 @@ const PimsData = [
   },
 ];
 
-const Item = ({item}:{item:string}) => {
+const Item = ({item}: {item: string}) => {
   // console.log(item)
   return (
     <View style={styles.lessonItem}>
-      <Icon name="play-circle" size={30} />
-      <Text style={{paddingLeft: 10}}>
-        {item}
-      </Text>
+      <View style={{alignItems:"center",flexDirection: 'row'}}>
+        <Icon name="play-circle" size={30} />
+        <Text style={{paddingLeft: 10}}>{item}</Text>
+      </View>
+      <View style={{flexDirection: 'row'}}>
+        <Button title="edit" onPress={()=>{}}></Button>
+        <Button title="delete" onPress={()=>{}}></Button>
+      </View>
     </View>
   );
 };
@@ -111,16 +115,17 @@ const PimsSectionList = () => {
   };
 
   const addMovie = (text: string) => {
-    console.log('addMovie');
-    setData(prevData => {
-        const newData = { ...prevData };
+    if (text != '') {
+      console.log(text);
+      console.log('addMovie');
+      setData(prevData => {
+        const newData = {...prevData};
         newData?.data.push(text);
         return newData;
       });
-    console.log(data)
+      console.log(data);
+    }
   };
-
-  
 
   const initialList = async () => {
     try {
@@ -140,10 +145,10 @@ const PimsSectionList = () => {
     try {
       console.log('进入getAsyncData');
       const jsonValue = await AsyncStorage.getItem('PimsData');
-      console.log("拉得数据：");
+      console.log('拉得数据：');
       console.log(jsonValue);
       if (jsonValue != null) {
-        console.log("已拉取到数据")
+        console.log('已拉取到数据');
         setData(JSON.parse(jsonValue));
       } else {
         initialList();
@@ -151,8 +156,8 @@ const PimsSectionList = () => {
     } catch (e) {
       console.log(e);
       // error reading value
-    } finally{
-        console.log('读后');
+    } finally {
+      console.log('读后');
     }
   };
 
@@ -161,7 +166,7 @@ const PimsSectionList = () => {
   const handleAddMovie = () => {
     addMovie(text);
     updateMovie(data);
-    setText('')
+    setText('');
   };
 
   return (
@@ -252,6 +257,7 @@ const styles = StyleSheet.create({
   lessonItem: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent:"space-between",
     margin: 2,
     padding: 5,
     borderBottomWidth: 0.5,
